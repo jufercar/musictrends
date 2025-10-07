@@ -280,12 +280,11 @@ For questions, issues, or suggestions:
 
 ## 🏆 Acknowledgments
 
-- **Dataset (Kaggle)**: Global Music Streaming Trends and Listener Insights – by Atharva Soundankar
-   https://www.kaggle.com/datasets/atharvasoundankar/global-music-streaming-trends-and-listener-insights
+- **Dataset (Kaggle)**: Global Music Streaming Trends and Listener Insights
+   https://www.kaggle.com/datasets/atharvasoundankar/global-music-streaming-trends-and-listener-insights/data
    Please credit the dataset author and Kaggle page in any public use.
-- **Visualization Libraries**: Plotly team for excellent charting capabilities
+- **Visualization Libraries**: Plotly team for charting capabilities
 - **Streamlit Community**: For the amazing dashboard framework
-- **Contributors**: All team members who made this project possible
 
 ---
 
