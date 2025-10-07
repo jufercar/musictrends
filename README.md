@@ -1,8 +1,9 @@
 # 🎵 Music Streaming Trends Analysis Dashboard
 
 ![Music Dashboard](https://img.shields.io/badge/Streamlit-Dashboard-red?style=for-the-badge&logo=streamlit)
-![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)
 ![Data Analysis](https://img.shields.io/badge/Data-Analysis-green?style=for-the-badge&logo=pandas)
+[![Open in Streamlit](https://img.shields.io/badge/Streamlit-Open%20App-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white)](https://adp7ebd2nzhdfdu3nkvsj2.streamlit.app/)
 
 ## 📋 Project Overview
 
@@ -18,13 +19,12 @@ This project provides a comprehensive analysis of global music streaming trends 
 ## 🏗️ Repository Structure
 
 ```
-📁 sesion12proyecto-musictrends/
-├── 📂 data/                    # Raw and processed datasets
+📁 musictrends/
+├── 📂 data/                    # Dataset(s)
 │   └── Global_Music_Streaming_Listener_Preferences.csv
-├── 📂 img/                     # Visualizations and charts
-├── 📂 notebooks/               # Jupyter notebooks for data exploration
+├── 📂 notebooks/               # Jupyter notebooks for analysis
 │   └── music_trends_analysis_clean.ipynb
-├── 📂 panel/                   # Streamlit dashboard implementation
+├── 📂 panel/                   # Streamlit dashboard
 │   └── app.py
 ├── .gitattributes             # Git attributes configuration
 ├── README.md                  # Project documentation
@@ -36,34 +36,45 @@ This project provides a comprehensive analysis of global music streaming trends 
 ### 📊 Interactive Dashboard Sections
 
 1. **📈 Dataset Overview**
-   - Key metrics and statistics
-   - Platform distribution analysis
-   - Geographic coverage insights
+   - Headline metrics, data shape, and sample composition
+   - Platform distribution and top countries by users
+   - Data quality cues and quick-glance KPIs
 
 2. **👥 Age-Based Analysis**
-   - Generational behavior patterns (Gen Z, Millennials, Gen X)
-   - Interactive variable selection
-   - Streaming habits by age groups
+   - Individual-age view with generation bands (Gen Z, Millennials, Gen X)
+   - Metrics: Minutes/day, Songs Liked, Discover Weekly Engagement (%), Repeat Song Rate (%)
+   - Generation insights and variable ranges
 
 3. **🌍 Country Analysis**
-   - Global streaming patterns with country flags
-   - Top performing regions
-   - Cross-cultural music preferences
+   - Country rankings for key metrics with flag annotations
+   - Top 5 leaders by metric and sample size transparency
+   - Identification of expansion “white spaces”
 
 4. **🎼 Genre Preferences**
-   - Most popular music genres
-   - Genre distribution by country
-   - Emerging trends identification
+   - Top genres overall and by country (interactive grouped bars)
+   - Coverage of Top-N and genre diversity indicators
+   - Regional preferences for localized content strategy
 
 5. **⏰ Listening Time Analysis**
-   - Peak listening hours
-   - Generational listening patterns
-   - Time-based user behavior
+   - Global distribution (Morning/Afternoon/Night)
+   - Breakdown by country and by age/generation
+   - Timing recommendations for notifications and releases
 
-6. **🔍 Strategic Insights**
-   - Data-driven business recommendations
-   - Implementation roadmap
-   - Revenue optimization strategies
+6. **📱 Platforms by Generation**
+   - Platform preference split across Gen Z, Millennials, Gen X
+   - Platform dominance and positioning cues
+
+7. **🗺️ Unified Choropleth Map**
+   - Country-level map switchable across quantitative metrics and total users
+   - Quick identification of concentration and opportunity zones
+
+8. **📈 Correlation Analysis**
+   - Heatmap of numerical variables and strongest pairs
+   - Guides for hypothesis generation and A/B test ideas
+
+9. **🧭 Strategic Insights**
+   - Data-driven recommendations, roadmap, and monetization levers
+   - KPIs for growth, engagement, revenue, and content
 
 ### 🎨 Dashboard Highlights
 
@@ -77,15 +88,15 @@ This project provides a comprehensive analysis of global music streaming trends 
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.10 or higher
 - pip package manager
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/sesion12proyecto-musictrends.git
-   cd sesion12proyecto-musictrends
+   git clone https://github.com/jufercar/musictrends.git
+   cd musictrends
    ```
 
 2. **Create virtual environment** (recommended)
@@ -120,9 +131,11 @@ This project provides a comprehensive analysis of global music streaming trends 
 
 ### Data Source
 - **File**: `Global_Music_Streaming_Listener_Preferences.csv`
-- **Records**: 100,000+ user profiles
-- **Time Period**: 2018-2024
+- **Records**: ~5,000 users
+- **Time Period**: 2018–2024
 - **Geography**: Global coverage across 50+ countries
+- **Source**: Kaggle – Global Music Streaming Trends and Listener Insights
+   (https://www.kaggle.com/datasets/atharvasoundankar/global-music-streaming-trends-and-listener-insights)
 
 ### Key Variables
 - **Demographics**: Age, Country
@@ -152,6 +165,22 @@ This project provides a comprehensive analysis of global music streaming trends 
 - Market opportunity identification
 - Competitive landscape assessment
 - Revenue optimization strategies
+
+## 📐 Statistical Methods (Summary)
+
+The analysis and dashboard leverage a practical set of statistical tests and diagnostics (via NumPy/Pandas/SciPy) to support decisions:
+
+- Normality tests: Shapiro–Wilk, D’Agostino’s K², Anderson–Darling
+- Variance homogeneity: Levene’s test
+- Mean/median comparisons: Independent t-test, Mann–Whitney U, Kruskal–Wallis
+- Association: Chi-square test of independence (categoricals)
+- Correlation: Pearson (linear), Spearman (rank, monotonic)
+- Uncertainty: Standard Error of the Mean (SEM), Q–Q plots for distribution checks
+
+Interpretation principles used in the project:
+- Prefer non-parametric tests when normality/homoscedasticity is not met
+- Emphasize effect sizes and practical significance alongside p-values
+- Use correlation analysis to ideate product/marketing experiments (not to infer causality)
 
 ## 📈 Key Insights Summary
 
@@ -191,10 +220,10 @@ This project provides a comprehensive analysis of global music streaming trends 
 
 ### Technologies Used
 - **Frontend**: Streamlit (Interactive dashboard)
-- **Data Processing**: Pandas, NumPy
+- **Data Processing**: Pandas, NumPy, SciPy
 - **Visualization**: Plotly, Matplotlib, Seaborn
 - **Analysis**: Jupyter Notebooks
-- **Deployment**: Local server (expandable to cloud)
+- **Deployment**: Local server and Streamlit Cloud ready
 
 ### Performance Optimizations
 - **Caching**: `@st.cache_data` for efficient data loading
@@ -247,13 +276,13 @@ For questions, issues, or suggestions:
 
 ## 🔄 Version History
 
-- **v1.0.0** - Initial release with core dashboard functionality
-- **v1.1.0** - Enhanced visualizations and performance improvements
-- **v1.2.0** - Added strategic insights and recommendations section
+- **v1.0.0** – Initial release
 
 ## 🏆 Acknowledgments
 
-- **Data Source**: Music streaming platforms and industry reports
+- **Dataset (Kaggle)**: Global Music Streaming Trends and Listener Insights – by Atharva Soundankar
+   https://www.kaggle.com/datasets/atharvasoundankar/global-music-streaming-trends-and-listener-insights
+   Please credit the dataset author and Kaggle page in any public use.
 - **Visualization Libraries**: Plotly team for excellent charting capabilities
 - **Streamlit Community**: For the amazing dashboard framework
 - **Contributors**: All team members who made this project possible
@@ -264,6 +293,6 @@ For questions, issues, or suggestions:
 
 **🎵 Transform Data into Music Industry Intelligence 🎵**
 
-[View Dashboard](http://localhost:8501) • [Report Issues](https://github.com/yourusername/sesion12proyecto-musictrends/issues) • [Request Features](https://github.com/yourusername/sesion12proyecto-musictrends/discussions)
+[View Dashboard](http://localhost:8501) • [Report Issues](https://github.com/jufercar/musictrends/issues) • [Request Features](https://github.com/jufercar/musictrends/discussions)
 
 </div>
