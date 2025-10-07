@@ -336,6 +336,16 @@ def main():
     # Header
     st.markdown('<h1 class="main-header">🎵 Music Streaming Trends Dashboard</h1>', unsafe_allow_html=True)
     st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Global Music Streaming Analysis (2018-2024)</p>', unsafe_allow_html=True)
+    
+    # Author and creation info
+    st.markdown('''
+    <div style="text-align: center; margin: 1rem 0; padding: 0.5rem; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;">
+        <p style="margin: 0; font-size: 0.9rem; color: #495057;">
+            <strong>👨‍💻 Desarrollado por:</strong> J. Fernández Carrillo &nbsp;•&nbsp; 
+            <strong>📅 Fecha de creación:</strong> Octubre 2025
+        </p>
+    </div>
+    ''', unsafe_allow_html=True)
 
     # Sidebar
     st.sidebar.image("https://img.icons8.com/color/96/000000/music.png", width=80)
