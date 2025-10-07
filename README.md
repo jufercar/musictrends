@@ -272,7 +272,6 @@ For questions, issues, or suggestions:
 
 - **Issues**: Open an issue on GitHub
 - **Discussions**: Use GitHub Discussions for questions
-- **Email**: Contact the development team
 
 ## 🔄 Version History
 
