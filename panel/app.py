@@ -342,7 +342,7 @@ def main():
     <div style="text-align: center; margin: 1rem 0; padding: 0.5rem; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;">
         <p style="margin: 0; font-size: 0.9rem; color: #495057;">
             <strong> </strong> J. Fern&#225;ndez Carrillo &nbsp;•&nbsp; 
-            <strong> </strong> Octubre 2025
+            <strong> </strong> October 2025
         </p>
     </div>
     ''', unsafe_allow_html=True)
