@@ -1181,13 +1181,27 @@ def main():
                         st.write(f"**Interpretation**: {strength} {direction} correlation")
                     
                     with col2:
-                        # Scatter plot
-                        fig_scatter = px.scatter(
-                            x=x, y=y,
-                            title=f'{var1} vs {var2}',
-                            labels={'x': var1, 'y': var2},
-                            trendline="ols"
-                        )
+                        # Scatter plot with optional OLS trendline (requires statsmodels)
+                        trendline_available = True
+                        try:
+                            import statsmodels.api as sm  # noqa: F401
+                        except Exception:
+                            trendline_available = False
+                        
+                        if trendline_available:
+                            fig_scatter = px.scatter(
+                                x=x, y=y,
+                                title=f'{var1} vs {var2}',
+                                labels={'x': var1, 'y': var2},
+                                trendline="ols"
+                            )
+                        else:
+                            st.info("Trendline disabled: 'statsmodels' not available. Showing scatter without OLS line.")
+                            fig_scatter = px.scatter(
+                                x=x, y=y,
+                                title=f'{var1} vs {var2}',
+                                labels={'x': var1, 'y': var2}
+                            )
                         st.plotly_chart(fig_scatter, use_container_width=True)
 
         with tab4:
