@@ -1,23 +1,11 @@
 # 🎵 Music Streaming Trends Analysis Dashboard
 
-![Music Dashboard](https://img.shields.io/badge/Streamlit-Dashboard-red?style=for-the-badge&logo=streamlit)
-![Python](ht## 📐 Statistical Methods (Summary)
-
-The analysis and dashboard leverage non-parametric statistical methods (via NumPy/Pandas/SciPy), since the data distributions are not normal:
-
-- **Distribution assessment**: Shapiro–Wilk, D'Agostino's K², Anderson–Darling normality tests
-- **Two-group comparisons**: Mann–Whitney U test (non-parametric alternative to t-test)
-- **Multi-group comparisons**: Kruskal–Wallis H-test (non-parametric alternative to ANOVA)
-- **Categorical associations**: Chi-square test of independence with Cramér's V effect size
-- **Correlation analysis**: Pearson (linear) and Spearman (rank-based, monotonic relationships)
-- **Visualization**: Q–Q plots for distribution assessment, box plots for group comparisons
-
-Key principles applied:
-- Use non-parametric tests exclusively due to non-normal distributions
-- Report effect sizes alongside p-values for practical significance
-- Emphasize median and IQR over mean and standard deviation for non-normal datads.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)
+![Music Dashboard](https://img.shields.io/badge/Streamlit-Dashboard-ff4b4b?style=for-the-badge&logo=streamlit)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
 ![Data Analysis](https://img.shields.io/badge/Data-Analysis-green?style=for-the-badge&logo=pandas)
-[![Open in Streamlit](https://img.shields.io/badge/Streamlit-Open%20App-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white)](https://adp7ebd2nzhdfdu3nkvsj2.streamlit.app/)
+[![Open in Streamlit](https://img.shields.io/badge/Open-Live%20App-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white)](https://adp7ebd2nzhdfdu3nkvsj2.streamlit.app/)
+
+Last updated: 2025-10-08
 
 ## 📋 Project Overview
 
@@ -25,10 +13,9 @@ This project provides a comprehensive analysis of global music streaming trends 
 
 ### 🎯 Objectives
 
-- **Analyze** global music streaming patterns and user behavior
-- **Identify** key trends across demographics, genres, and geographical regions
-- **Develop** strategic recommendations for music industry stakeholders
-- **Present** findings through an intuitive, interactive dashboard suitable for executive presentations
+- Explore global music streaming patterns and user behavior
+- Surface trends across demographics, genres, platforms, and countries
+- Provide an intuitive, interactive dashboard to communicate findings
 
 ## 🏗️ Repository Structure
 
@@ -86,9 +73,9 @@ This project provides a comprehensive analysis of global music streaming trends 
    - Heatmap of numerical variables and strongest pairs
    - Guides for hypothesis generation and A/B test ideas
 
-9. **🧭 Strategic Insights**
-   - Data-driven recommendations, roadmap, and monetization levers
-   - KPIs for growth, engagement, revenue, and content
+9. **� Statistical Tests (summary in app & notebook)**
+   - Non-parametric tests with medians/IQR and effect sizes
+   - Clear p-values and compact interpretations
 
 ### 🎨 Dashboard Highlights
 
@@ -160,43 +147,24 @@ This project provides a comprehensive analysis of global music streaming trends 
 
 ## 🔬 Analysis Methodology
 
-### 1. **Data Preparation**
-- Data cleaning and quality assessment
-- Missing value handling
-- Feature engineering (age groups, segments)
+### 1. Data Preparation
+- Data cleaning and quality checks
+- Handling of missing values
+- Feature engineering (e.g., age grouping)
 
-### 2. **Exploratory Data Analysis**
-- Univariate and bivariate analysis
-- Correlation analysis
-- Trend identification
+### 2. Exploratory Data Analysis
+- Univariate and bivariate exploration
+- Correlation analysis (Pearson and Spearman)
+- Distribution diagnostics (histograms, Q–Q)
 
-### 3. **User Segmentation**
-- Generational cohort analysis
-- Behavioral clustering
-- Geographic segmentation
+### 3. Statistical Testing (non-parametric focus)
+- Distribution assessment: Shapiro–Wilk, D’Agostino’s K², Anderson–Darling
+- Two groups: Mann–Whitney U test
+- Multiple groups: Kruskal–Wallis H-test
+- Categorical association: Chi-square test of independence with Cramér’s V
+- Reporting: p-values plus effect sizes; medians and IQR preferred over means/SD
 
-### 4. **Strategic Analysis**
-- Market opportunity identification
-- Competitive landscape assessment
-- Revenue optimization strategies
-
-## 📐 Statistical Methods (Summary)
-
-The analysis and dashboard leverage a practical set of statistical tests and diagnostics (via NumPy/Pandas/SciPy) to support decisions:
-
-- Normality tests: Shapiro–Wilk, D’Agostino’s K², Anderson–Darling
-- Variance homogeneity: Levene’s test
-- Mean/median comparisons: Independent t-test, Mann–Whitney U, Kruskal–Wallis
-- Association: Chi-square test of independence (categoricals)
-- Correlation: Pearson (linear), Spearman (rank, monotonic)
-- Uncertainty: Standard Error of the Mean (SEM), Q–Q plots for distribution checks
-
-Interpretation principles used in the project:
-- Prefer non-parametric tests when normality/homoscedasticity is not met
-- Emphasize effect sizes and practical significance alongside p-values
-- Use correlation analysis to ideate product/marketing experiments (not to infer causality)
-
-## 📈 Key Insights Summary
+## 📈 Key Observations (selected)
 
 ### 🎯 User Demographics
 - **Age Distribution**: Balanced across generations with slight Millennial dominance
@@ -208,27 +176,10 @@ Interpretation principles used in the project:
 - **Temporal Patterns**: Evening listening peaks with generational differences
 - **Engagement Levels**: High repeat listening rates indicate strong user loyalty
 
-### 🌍 Market Opportunities
-- **Emerging Markets**: Significant growth potential in underrepresented regions
-- **Demographic Gaps**: Opportunities in specific age segments
-- **Content Diversification**: Potential for genre expansion and localization
-
-## 💼 Business Applications
-
-### For Music Industry Executives
-- **Strategic Planning**: Data-driven market expansion decisions
-- **Content Strategy**: Genre and artist investment priorities
-- **User Acquisition**: Targeted marketing campaign insights
-
-### For Streaming Platforms
-- **Feature Development**: User experience optimization
-- **Personalization**: Enhanced recommendation algorithms
-- **Market Penetration**: Geographic expansion strategies
-
-### For Artists & Labels
-- **Audience Analysis**: Fan demographic understanding
-- **Release Strategy**: Optimal timing and platform selection
-- **Market Entry**: New territory expansion planning
+## 💡 Potential Uses
+- Dashboarding and storytelling with interactive charts
+- Exploratory analysis to inspire product or marketing hypotheses
+- Benchmarking of platforms, genres, and countries in the dataset
 
 ## 🛠️ Technical Implementation
 
@@ -305,6 +256,6 @@ For questions, issues, or suggestions:
 
 **🎵 Transform Data into Music Industry Intelligence 🎵**
 
-[View Dashboard](http://localhost:8501) • [Report Issues](https://github.com/jufercar/musictrends/issues) • [Request Features](https://github.com/jufercar/musictrends/discussions)
+[View Live Dashboard](https://adp7ebd2nzhdfdu3nkvsj2.streamlit.app/) • [Report Issues](https://github.com/jufercar/musictrends/issues) • [Request Features](https://github.com/jufercar/musictrends/discussions)
 
 </div>
