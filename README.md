@@ -73,7 +73,7 @@ This project provides a comprehensive analysis of global music streaming trends 
    - Heatmap of numerical variables and strongest pairs
    - Guides for hypothesis generation and A/B test ideas
 
-9. **� Statistical Tests (summary in app & notebook)**
+9. **📈 Statistical Tests (summary in app & notebook)**
    - Non-parametric tests with medians/IQR and effect sizes
    - Clear p-values and compact interpretations
 
