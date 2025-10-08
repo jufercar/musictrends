@@ -950,7 +950,7 @@ def main():
         """, unsafe_allow_html=True)
 
         # Tab structure for different analyses
-        tab1, tab2, tab3, tab4 = st.tabs(["📊 Distribution Analysis", "🧪 Hypothesis Testing", "🔗 Correlation Analysis", "📏 Confidence Intervals"])
+        tab1, tab2, tab3 = st.tabs(["📊 Distribution Analysis", "🧪 Non-Parametric Hypothesis Testing", "🔗 Correlation Analysis"])
         
         with tab1:
             st.subheader("📊 Distribution Analysis")
@@ -1034,12 +1034,14 @@ def main():
                         st.warning(f"Some normality tests could not be performed: {str(e)}")
 
         with tab2:
-            st.subheader("🧪 Hypothesis Testing")
+            st.subheader("🧪 Non-Parametric Hypothesis Testing")
+            
+            st.info("Since distributions are not normal, we use non-parametric tests: Mann-Whitney U for 2 groups, Kruskal-Wallis for 3+ groups")
             
             # Test selection
             test_type = st.selectbox(
                 "Select test type:",
-                ["Age differences between generations", "Streaming behavior by platform", "Genre-Country independence"],
+                ["Age differences between generations", "Streaming behavior by platform", "Premium vs Free comparison", "Genre-Country independence"],
                 help="Choose the type of hypothesis test to perform"
             )
             
@@ -1052,17 +1054,22 @@ def main():
                     gen_x = df[df['Age_Group'] == 'Gen X (42-60)']['Age'].dropna()
                     
                     if len(gen_z) > 0 and len(millennials) > 0 and len(gen_x) > 0:
-                        # ANOVA test
-                        f_stat, f_p = stats.f_oneway(gen_z, millennials, gen_x)
-                        anova_result = "✅ Significant" if f_p < 0.05 else "❌ Not Significant"
-                        
-                        st.write(f"**One-way ANOVA**: F-statistic={f_stat:.4f}, p-value={f_p:.4f} → {anova_result}")
-                        
-                        # Kruskal-Wallis test (non-parametric)
+                        # Kruskal-Wallis test (non-parametric alternative to ANOVA)
                         kruskal_stat, kruskal_p = kruskal(gen_z, millennials, gen_x)
                         kruskal_result = "✅ Significant" if kruskal_p < 0.05 else "❌ Not Significant"
                         
                         st.write(f"**Kruskal-Wallis Test**: H-statistic={kruskal_stat:.4f}, p-value={kruskal_p:.4f} → {kruskal_result}")
+                        
+                        # Effect size approximation
+                        total_n = len(gen_z) + len(millennials) + len(gen_x)
+                        eta_squared = (kruskal_stat - 3 + 1) / (total_n - 3)
+                        st.write(f"**Effect size (η²)**: {eta_squared:.4f}")
+                        
+                        # Medians by generation
+                        st.write("**Median ages by generation:**")
+                        st.write(f"- Gen Z: {np.median(gen_z):.1f} years (n={len(gen_z)})")
+                        st.write(f"- Millennials: {np.median(millennials):.1f} years (n={len(millennials)})")
+                        st.write(f"- Gen X: {np.median(gen_x):.1f} years (n={len(gen_x)})")
                         
                         # Box plot for visualization
                         fig_box = px.box(df, x='Age_Group', y='Age', title='Age Distribution by Generation')
@@ -1074,38 +1081,95 @@ def main():
                 if streaming_cols and 'Streaming Platform' in df.columns:
                     selected_streaming_col = st.selectbox("Select streaming variable:", streaming_cols)
                     
-                    platforms = df['Streaming Platform'].unique()[:3]  # Test first 3 platforms
+                    platforms = df['Streaming Platform'].unique()
                     platform_data = []
+                    platform_names = []
                     
                     for platform in platforms:
                         platform_values = df[df['Streaming Platform'] == platform][selected_streaming_col].dropna()
                         if len(platform_values) > 0:
                             platform_data.append(platform_values)
+                            platform_names.append(platform)
                     
                     if len(platform_data) >= 2:
                         st.write(f"**Hypothesis**: There are significant differences in {selected_streaming_col} between platforms")
                         
                         if len(platform_data) == 2:
-                            # Two-sample t-test
-                            t_stat, t_p = ttest_ind(platform_data[0], platform_data[1])
-                            t_result = "✅ Significant" if t_p < 0.05 else "❌ Not Significant"
-                            st.write(f"**Two-sample t-test**: t-statistic={t_stat:.4f}, p-value={t_p:.4f} → {t_result}")
-                            
-                            # Mann-Whitney U test
-                            u_stat, u_p = mannwhitneyu(platform_data[0], platform_data[1])
+                            # Mann-Whitney U test for two groups
+                            u_stat, u_p = mannwhitneyu(platform_data[0], platform_data[1], alternative='two-sided')
                             u_result = "✅ Significant" if u_p < 0.05 else "❌ Not Significant"
                             st.write(f"**Mann-Whitney U Test**: U-statistic={u_stat:.4f}, p-value={u_p:.4f} → {u_result}")
+                            
+                            # Effect size
+                            n1, n2 = len(platform_data[0]), len(platform_data[1])
+                            effect_size = abs(u_stat - (n1 * n2) / 2) / (n1 * n2)
+                            st.write(f"**Effect size**: {effect_size:.4f}")
+                            
+                            # Medians
+                            st.write("**Median values by platform:**")
+                            st.write(f"- {platform_names[0]}: {np.median(platform_data[0]):.1f} (n={n1})")
+                            st.write(f"- {platform_names[1]}: {np.median(platform_data[1]):.1f} (n={n2})")
                         
                         elif len(platform_data) >= 3:
-                            # ANOVA for multiple platforms
-                            f_stat, f_p = stats.f_oneway(*platform_data)
-                            anova_result = "✅ Significant" if f_p < 0.05 else "❌ Not Significant"
-                            st.write(f"**One-way ANOVA**: F-statistic={f_stat:.4f}, p-value={f_p:.4f} → {anova_result}")
+                            # Kruskal-Wallis test for multiple groups
+                            kruskal_stat, kruskal_p = kruskal(*platform_data)
+                            kruskal_result = "✅ Significant" if kruskal_p < 0.05 else "❌ Not Significant"
+                            st.write(f"**Kruskal-Wallis Test**: H-statistic={kruskal_stat:.4f}, p-value={kruskal_p:.4f} → {kruskal_result}")
+                            
+                            # Medians by platform
+                            st.write("**Median values by platform:**")
+                            for i, platform in enumerate(platform_names):
+                                median_val = np.median(platform_data[i])
+                                st.write(f"- {platform}: {median_val:.1f} (n={len(platform_data[i])})")
                         
                         # Box plot for visualization
                         fig_box = px.box(df, x='Streaming Platform', y=selected_streaming_col, 
                                        title=f'{selected_streaming_col} by Platform')
                         st.plotly_chart(fig_box, use_container_width=True)
+                        
+            elif test_type == "Premium vs Free comparison":
+                if 'Subscription Type' in df.columns:
+                    streaming_cols = [col for col in df.columns if ('stream' in col.lower() or 'minute' in col.lower()) and df[col].dtype in ['int64', 'float64']]
+                    
+                    if streaming_cols:
+                        selected_col = st.selectbox("Select variable for comparison:", streaming_cols)
+                        
+                        premium_data = df[df['Subscription Type'] == 'Premium'][selected_col].dropna()
+                        free_data = df[df['Subscription Type'] == 'Free'][selected_col].dropna()
+                        
+                        if len(premium_data) > 0 and len(free_data) > 0:
+                            # Mann-Whitney U test
+                            u_stat, u_p = mannwhitneyu(premium_data, free_data, alternative='two-sided')
+                            u_result = "✅ Significant" if u_p < 0.05 else "❌ Not Significant"
+                            
+                            st.write(f"**Mann-Whitney U Test**: Premium vs Free {selected_col}")
+                            st.write(f"- **U-statistic**: {u_stat:.4f}")
+                            st.write(f"- **p-value**: {u_p:.4f} → {u_result}")
+                            
+                            # Descriptive statistics
+                            st.write("**Descriptive Statistics:**")
+                            st.write(f"- **Premium median**: {np.median(premium_data):.1f} (n={len(premium_data)})")
+                            st.write(f"- **Free median**: {np.median(free_data):.1f} (n={len(free_data)})")
+                            
+                            # Effect size approximation
+                            n1, n2 = len(premium_data), len(free_data)
+                            effect_size = abs(u_stat - (n1 * n2) / 2) / (n1 * n2)
+                            st.write(f"- **Effect size**: {effect_size:.4f}")
+                            
+                            # Box plot
+                            comparison_df = pd.concat([
+                                pd.DataFrame({'Type': 'Premium', 'Value': premium_data}),
+                                pd.DataFrame({'Type': 'Free', 'Value': free_data})
+                            ])
+                            fig_box = px.box(comparison_df, x='Type', y='Value', 
+                                           title=f'{selected_col}: Premium vs Free')
+                            st.plotly_chart(fig_box, use_container_width=True)
+                        else:
+                            st.warning("Insufficient data for Premium vs Free comparison")
+                    else:
+                        st.warning("No streaming variables available for comparison")
+                else:
+                    st.info("Subscription Type data not available")
                         
             elif test_type == "Genre-Country independence":
                 if 'Top Genre' in df.columns and 'Country' in df.columns:
@@ -1204,62 +1268,7 @@ def main():
                             )
                         st.plotly_chart(fig_scatter, use_container_width=True)
 
-        with tab4:
-            st.subheader("📏 Confidence Intervals")
-            
-            if numerical_cols:
-                selected_ci_col = st.selectbox(
-                    "Select variable for confidence interval:",
-                    numerical_cols,
-                    help="Choose a numerical variable to calculate confidence intervals"
-                )
-                
-                confidence_level = st.slider(
-                    "Confidence Level (%)",
-                    min_value=90, max_value=99, value=95, step=1
-                ) / 100
-                
-                data = df[selected_ci_col].dropna()
-                
-                if len(data) > 0:
-                    mean = data.mean()
-                    std_error = stats.sem(data)
-                    degrees_freedom = len(data) - 1
-                    confidence_interval = stats.t.interval(confidence_level, degrees_freedom, mean, std_error)
-                    
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        st.write("**Confidence Interval Results:**")
-                        st.write(f"- **Sample Size**: {len(data):,}")
-                        st.write(f"- **Mean**: {mean:.4f}")
-                        st.write(f"- **Standard Error**: {std_error:.4f}")
-                        st.write(f"- **{confidence_level*100:.0f}% Confidence Interval**: ({confidence_interval[0]:.4f}, {confidence_interval[1]:.4f})")
-                        
-                        margin_of_error = confidence_interval[1] - mean
-                        st.write(f"- **Margin of Error**: ±{margin_of_error:.4f}")
-                    
-                    with col2:
-                        # Visualization of confidence interval
-                        fig_ci = go.Figure()
-                        
-                        # Add mean line
-                        fig_ci.add_hline(y=mean, line_dash="solid", line_color="blue", 
-                                       annotation_text=f"Mean: {mean:.4f}")
-                        
-                        # Add confidence interval
-                        fig_ci.add_hrect(y0=confidence_interval[0], y1=confidence_interval[1],
-                                       fillcolor="lightblue", opacity=0.3,
-                                       annotation_text=f"{confidence_level*100:.0f}% CI")
-                        
-                        fig_ci.update_layout(
-                            title=f"Confidence Interval for {selected_ci_col}",
-                            yaxis_title=selected_ci_col,
-                            showlegend=False,
-                            height=400
-                        )
-                        
-                        st.plotly_chart(fig_ci, use_container_width=True)
+
 
     elif analysis_option == "🔍 Strategic Insights":
         st.header("🔍 Strategic Insights & Recommendations")

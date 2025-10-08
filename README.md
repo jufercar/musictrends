@@ -1,7 +1,21 @@
 # 🎵 Music Streaming Trends Analysis Dashboard
 
 ![Music Dashboard](https://img.shields.io/badge/Streamlit-Dashboard-red?style=for-the-badge&logo=streamlit)
-![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)
+![Python](ht## 📐 Statistical Methods (Summary)
+
+The analysis and dashboard leverage non-parametric statistical methods (via NumPy/Pandas/SciPy), since the data distributions are not normal:
+
+- **Distribution assessment**: Shapiro–Wilk, D'Agostino's K², Anderson–Darling normality tests
+- **Two-group comparisons**: Mann–Whitney U test (non-parametric alternative to t-test)
+- **Multi-group comparisons**: Kruskal–Wallis H-test (non-parametric alternative to ANOVA)
+- **Categorical associations**: Chi-square test of independence with Cramér's V effect size
+- **Correlation analysis**: Pearson (linear) and Spearman (rank-based, monotonic relationships)
+- **Visualization**: Q–Q plots for distribution assessment, box plots for group comparisons
+
+Key principles applied:
+- Use non-parametric tests exclusively due to non-normal distributions
+- Report effect sizes alongside p-values for practical significance
+- Emphasize median and IQR over mean and standard deviation for non-normal datads.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)
 ![Data Analysis](https://img.shields.io/badge/Data-Analysis-green?style=for-the-badge&logo=pandas)
 [![Open in Streamlit](https://img.shields.io/badge/Streamlit-Open%20App-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white)](https://adp7ebd2nzhdfdu3nkvsj2.streamlit.app/)
 
