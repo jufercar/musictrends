@@ -1,5 +1,9 @@
 # 🎵 Music Streaming Trends Analysis Dashboard
 
+<div align="center">
+  <img src="img/dashboard-cover.png" alt="Music Streaming Trends Analysis Dashboard" width="600">
+</div>
+
 ![Music Dashboard](https://img.shields.io/badge/Streamlit-Dashboard-ff4b4b?style=for-the-badge&logo=streamlit)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
 ![Data Analysis](https://img.shields.io/badge/Data-Analysis-green?style=for-the-badge&logo=pandas)
